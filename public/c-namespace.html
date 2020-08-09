@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/socket.io/socket.io.js"></script>
+    <script src=></script>
+    <script>
+      var namespace = '/' + window.location.pathname.split('/')[2]
+      document.title = `Eugene.io: /c${namespace}`
+      console.log("Connecting to socket namespace " + namespace)
+      var socket = io(namespace || '/');
+      socket.on('room-not-found', ()=> window.location = '../roomerror')
+    </script>
+    <script src="/../javascripts/c-namespace/fatal-error.js"></script>
+    <script src="/../javascripts/c-namespace/get-elements.js"></script>
+    <script src="/../javascripts/c-namespace/game-timer.js"></script>
+    <script src="/../javascripts/c-namespace/socket.io-stream.js"></script>
+    <script src="/../javascripts/c-namespace/functions.js"></script>
+    <script src="/../javascripts/c-namespace/get-name.js"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/../css/c-namespace.css" />
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,300,700|EB+Garamond" rel="stylesheet">
+    <title>Eugene.io Room</title>
+  </head>
+  <body>
+    <div id = "headerwrap">    <header>
+    <h1 id="title">Title</h1>
+    <h4 id="description">Description</h4></header>
+    
+    <div id="streams">
+      <div id="cam-1">
+        <h3 class="playername" id="playername1"></h3>
+        <h3 class="timer" id="timer1"></h3>
+        <div class="video-overlay" player="1" onclick = "vote(this)">
+          <h3 class="overlay-text" player="1">Click to Vote</h3><video id="cam-1-embed" autoplay></video
+        ></div>
+        <div><button class="btn" onclick="voteKick(this,1)" id = "votekick-button1">Vote to Kick</button><button class="btn" onclick="report(1)">Report</button><p id=votekick-text1></p> </div>
+      </div>
+      <div id="cam-2">
+        <h3 class="playername" id="playername2"></h3>
+        <h3 class="timer" id="timer2"></h3>
+        <div class="video-overlay" player = "2" onclick = "vote(this)">
+          <h3 class="overlay-text" player = "2">Click to Vote</h3><video id="cam-2-embed" autoplay></video
+        ></div>
+        <div><button class="btn" onclick="voteKick(this,2)" id="votekick-button2">Vote to Kick</button><button class="btn" onclick="report(2)">Report</button> <p id= "votekick-text2"></p></div>
+      </div>
+      <script src="/../javascripts/c-namespace/read-camera-stream.js"></script>
+    </div></div>
+
+    <div id = "container">
+      <div id="stats-chat">
+        <h2 id="player-stats">0 Current Viewers 0 in Queue</h2>
+        <h2 id="player-notif">Waiting for Players to Start...</h2>
+        <div id="message-form">
+          <script src="/../javascripts/c-namespace/chat.js"></script>
+          <ul id="messages"></ul>
+          <input id="message-box" autocomplete="off" placeholder="Hit Enter to Chat  (Please be polite and appropriate)" />
+        </div>
+      </div>
+      <div id="queue"
+        >
+        <div id = "queue-container"><h2 id="queue-next">Next in Queue: </h2><div id="player-queue"></div
+        ><button id="queue-button" onclick="joinQueue()" class="btn">Join Queue</button></div
+      ></div>
+    </div>
+    <script>setTimeout(()=>{getName()}, 100)</script>
+  </body>
+</html>

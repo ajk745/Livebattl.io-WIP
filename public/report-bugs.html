@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="/../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/../css/report-bugs.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Oswald:400,300,700|EB+Garamond"
+      rel="stylesheet"
+    />
+    <script src="../javascripts/home/get-elements.js"></script>
+    <script src="../javascripts/home/get-featured-room.js"></script>
+    <title>Eugene.io Bugs & Suggestions</title>
+  </head>
+  <body>
+    <div id="headerwrap"
+      ><header>
+        <h1 id="title">Bugs & Suggestions</h1>
+        <h4 id="description">Report bugs or recommend new features to our team</h4></header
+      >
+      <div id="tab-container"
+        ><div id="tab">
+          <button class="tablink" onclick="document.location.href = '../'">Home</button>
+          <button class="tablink" onclick="document.location.href = '../rooms'">Rooms</button>
+          <button class="tablink" onclick="document.location.href = '../about'">About</button>
+        </div></div
+      >
+    </div>
+    <form method="post" action="../api/bug-report" enctype="application/x-www-form-urlencoded">
+      <label>What are you submitting?</label><br />
+      <select name="reportType" id="report-type" required
+        ><option value="bug">A Bug Report</option>
+        <option value="suggestion">A Feature Suggestion</option></select
+      >
+      <br />
+      <label>Please describe or explain the bug or feature suggestion as clearly as possible.</label
+      ><br />
+      <textarea
+        placeholder="Please include any images as links to Imgur or another large photo-sharing service"
+        name="reportText"
+        id="report-text"
+        rows="10"
+        required
+      ></textarea>
+      <br />
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>

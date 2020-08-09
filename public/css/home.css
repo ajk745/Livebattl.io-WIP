@@ -1,0 +1,111 @@
+#container-close {
+  color: white;
+  margin-left: calc(100% - 2em);
+  font-size: larger;
+}
+
+#button-container {
+  background: var(--banner-background, url(../images/header-bg.jpg)) no-repeat center;
+  height: 8em;
+  background-attachment: relative;
+  background-position: center 80%;
+  width: 100%;
+  -webkit-background-size: 100%;
+  -moz-background-size: 100%;
+  -o-background-size: 100%;
+  background-size: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  text-align: center;
+  align-items: center;
+  align-content: center;
+}
+
+#button-container button {
+  justify-self: center;
+  height: 100%;
+  color: white;
+  width: calc(100% / 3);
+  background: transparent;
+  margin: 0;
+  border-radius: 0;
+  border: 0;
+  border-left: var(--main-color, #333) solid 1px;
+  border-right: var(--main-color, #333) solid 1px;
+  transition: ease-in 0.3s;
+}
+
+#button-container button:hover {
+  background: var(--main-color, #333);
+}
+
+#featured-room-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#featured-room-list li {
+  height: 4em;
+  margin: 0;
+  border-top: 1px white solid;
+}
+
+#featured-room-list li:last-child {
+  border-bottom: 1px white solid;
+}
+
+#featured-room-list li h3,
+h6 {
+  color: white;
+  margin: 0;
+}
+
+#news {
+  height: calc(100% - 4em);
+  margin-left: 66%;
+  padding: 2em;
+  border-left: white 1px solid;
+}
+#trending {
+  padding: 2em;
+  float: left;
+  width: calc(66% - 4em);
+}
+#featured {
+  text-align: center;
+}
+#container {
+  margin: 0;
+  width: 100%;
+  background-color: var(--main-color, #333);
+  padding-bottom: 2em;
+  padding-top: 2em;
+}
+
+#container p,
+ul,
+li,
+h1,
+h2 {
+  color: white;
+  margin-top: 0;
+}
+
+#container h1 {
+  margin-left: 1em;
+}
+
+#container p,
+h2,
+ul,
+li,
+img {
+  margin-left: 2rem;
+}
+
+p {
+  margin-left: 2em;
+}

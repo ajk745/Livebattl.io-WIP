@@ -1,0 +1,166 @@
+#streams {
+  width: 100%;
+  background-color: var(--main-color, #333);
+  padding-bottom: 1em;
+}
+
+#cam-1,
+#cam-2 {
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#cam-1 {
+  float: left;
+}
+#cam-2 {
+  margin-left: 50%;
+}
+
+#stats-chat {
+  width: 70%;
+  padding-left: 1em;
+  float: left;
+  border-style: none solid none none;
+  border: var(--main-color, #333) px;
+}
+
+#stats-chat h2 {
+  margin: 0;
+}
+
+#queue {
+  display: block;
+  width: 25%;
+  margin-left: 70%;
+  height: auto;
+  height: 100%;
+}
+
+#queue-container {
+  margin-left: 2em;
+  margin-top: 0;
+}
+
+#queue-next {
+  margin-left: 0;
+}
+
+#container {
+  display: table;
+  width: 100%;
+}
+
+body {
+  transition: all 0.3s ease-in;
+}
+
+.playername {
+  margin: 0;
+  height: 2em;
+  text-align: center;
+  text-transform: uppercase;
+}
+.timer {
+  margin: 0;
+  height: 2em;
+  text-align: center;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in;
+}
+
+.video-overlay {
+  transition: all 0.3s ease-in;
+  position: relative;
+  text-align: center;
+  align-items: center;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.muted-video {
+  filter: grayscale(0.5);
+}
+
+.overlay-text {
+  transition: all 0.3s ease-in;
+  margin: 0;
+  position: absolute;
+  font-size: 56px !important;
+  color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(0.3em);
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center; /** Y-axis align **/
+  justify-content: center; /** X-axis align **/
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.overlay-text.winner {
+  backdrop-filter: saturate(0.5);
+  color: gold;
+}
+
+.overlay-text.loser {
+  backdrop-filter: grayscale(1);
+}
+
+.overlay-text.draw {
+  backdrop-filter: grayscale(0.3);
+}
+
+video {
+  transition: all 0.3s ease-in;
+  align-self: center;
+  width: 99%;
+  background-color: var(--secondary-color, black);
+  border: 5px;
+  border-color: gold;
+  object-fit: cover;
+  height: 30em;
+}
+
+ol li {
+  transition: all 0.3s ease-in;
+  list-style-type: none;
+  padding-left: 0;
+}
+
+ol {
+  transition: all 0.3s ease-in;
+  padding-left: 0;
+}
+
+#message-form {
+  width: 90%;
+  border: var(--main-color, #333) solid 2px;
+}
+
+#message-form input {
+  position: relative;
+  width: 100%;
+  height: 2em;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+#messages {
+  height: 16em;
+  max-height: 16em;
+  list-style-type: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+#messages li {
+  padding: 5px 10px;
+}
+#messages li:nth-child(odd) {
+  background: #eee;
+}

@@ -1,0 +1,66 @@
+#roomlist {
+  padding: 0;
+}
+
+#room-search-info {
+  margin-left: 2em;
+}
+
+#new-room-button {
+  width: 20%;
+  height: 2em;
+  margin: 1em;
+  margin-left: 2em;
+}
+
+#room-search {
+  margin: 1em;
+  margin-left: calc(60% - 5em);
+  border: #999 2px solid;
+  height: 2em;
+  width: 20%;
+}
+.card-image {
+  object-fit: cover;
+  background-size: cover;
+  background-position: 50% 50%;
+  height: 12em;
+}
+
+/* Float four columns side by side */
+.column {
+  float: left;
+  width: 23%;
+  padding: 0 1%;
+}
+
+/* Remove extra left and right margins, due to padding in columns */
+.row {
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+/* Style the counter cards */
+.card {
+  overflow: hidden;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+  padding: 1em 0;
+  text-align: center;
+  background-color: #f1f1f1;
+}
+
+/* Responsive columns - one column layout (vertical) on small screens */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}

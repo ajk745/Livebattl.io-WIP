@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="/../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/../css/rooms.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Oswald:400,300,700|EB+Garamond"
+      rel="stylesheet"
+    />
+    <script src="../javascripts/rooms/get-elements.js"></script>
+    <script src="../javascripts/rooms/get-rooms.js"></script>
+    <title>Eugene.io Rooms</title>
+  </head>
+  <body>
+    <div id="headerwrap"
+      ><header>
+        <h1 id="title">Rooms</h1>
+        <h4 id="description">Browse and search game rooms to join...</h4></header
+      >
+      <div id="tab-container"
+        ><div id="tab">
+          <button class="tablink" onclick="document.location.href = '../'">Home</button>
+          <button class="tablink" id="selected">Rooms</button>
+          <button class="tablink" onclick="document.location.href = '../about'">About</button>
+        </div></div
+      >
+    </div>
+    <button id="new-room-button">Create New Room (coming soon)</button
+    ><input type="text" id="room-search" placeholder="Search rooms" />
+    <p id="room-search-info"></p>
+    <ul id="roomlist"> </ul>
+
+    <script>
+      getRooms();
+    </script>
+  </body>
+</html>
