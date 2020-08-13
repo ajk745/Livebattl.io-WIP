@@ -9,8 +9,8 @@ function updateGameData(game) {
           queue.length > 0 ? 'Starting Next Game...' : 'Waiting for Players to Start...';
         timer1.innerHTML = 'Waiting for Players...';
         timer2.innerHTML = 'Waiting for Players...';
-        video1.volume = 1;
-        video2.volume = 1;
+        video1.volume = stream && stream.cam === 1 ? 0 : 1;
+        video2.volume = stream && stream.cam === 2 ? 0 : 1;
         overlayText.forEach((element) => {
           element.style.color = 'rgba(255, 255, 255, 0.6)';
           element.style.visibility = 'hidden';
@@ -26,8 +26,8 @@ function updateGameData(game) {
         timer2.innerHTML = '';
         playerTag1.style.color = 'white';
         playerTag2.style.color = 'white';
-        video1.volume = 1;
-        video2.volume = 1;
+        video1.volume = stream && stream.cam === 1 ? 0 : 1;
+        video2.volume = stream && stream.cam === 2 ? 0 : 1;
         overlayText.forEach((element) => {
           element.style.visibility = 'visible';
           element.style.removeProperty('color');
@@ -95,8 +95,8 @@ function updateGameData(game) {
           queue.length > 0 ? 'Starting Next Game...' : 'Waiting for Players to Start...';
         timer1.innerHTML = 'Waiting for Players...';
         timer2.innerHTML = 'Waiting for Players...';
-        video1.volume = 1;
-        video2.volume = 1;
+        video1.volume = stream && stream.cam === 1 ? 0 : 1;
+        video2.volume = stream && stream.cam === 2 ? 0 : 1;
         overlayText.forEach((element) => {
           element.style.color = 'rgba(255, 255, 255, 0.6)';
           element.style.visibility = 'hidden';
@@ -112,8 +112,8 @@ function updateGameData(game) {
         timer2.innerHTML = '';
         playerTag1.style.color = 'white';
         playerTag2.style.color = 'white';
-        video1.volume = 1;
-        video2.volume = 1;
+        video1.volume = stream && stream.cam === 1 ? 0 : 1;
+        video2.volume = stream && stream.cam === 2 ? 0 : 1;
         overlayText.forEach((element) => {
           element.style.visibility = 'visible';
           element.style.removeProperty('color');
