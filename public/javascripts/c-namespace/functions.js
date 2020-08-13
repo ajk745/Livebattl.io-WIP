@@ -85,4 +85,6 @@ socket.on('votekick', (player, votes, spectators) => {
   }
 });
 
-socket.on('game-rules', (data) => (rules = data));
+socket.on('game-rules', (data) => {
+  rules = data;
+});

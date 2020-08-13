@@ -2,7 +2,7 @@ module.exports = function Game(rules, endCallback) {
   this.gameState = 'game';
   this.player = 1;
   this.time = rules.timeLimit;
-  this.winner = 1;
+  this.turnMode = rules.turnMode;
   this.playerInterrupt = null;
 
   var vote1 = [],
@@ -12,30 +12,55 @@ module.exports = function Game(rules, endCallback) {
   this.timer = setInterval(() => {
     this.time--;
     if (this.time === 0) {
-      if (this.player === 1) {
-        this.player = 2;
-        this.time = rules.timeLimit;
-      } else if (this.player === 2) {
-        this.player = 0;
-        this.gameState = 'voting';
-        this.time = rules.votingTime;
-      } else if (this.player === 0) {
-        if (this.playerInterrupt) {
-          this.winner = this.playerInterrupt === 1 ? 2 : 1;
-          this.gameState = 'results-interrupt';
-          this.time = rules.endTime;
-          this.player = -1;
-        } else {
-          if (vote1.length === vote2.length) this.winner = 0;
-          else this.winner = vote1.length > vote2.length ? 1 : 2;
-          this.gameState = 'results';
-          this.time = rules.endTime;
-          this.player = -1;
+      if (this.turnMode) {
+        if (this.player === 1) {
+          this.player = 2;
+          this.time = rules.timeLimit;
+        } else if (this.player === 2) {
+          this.player = 0;
+          this.gameState = 'voting';
+          this.time = rules.votingTime;
+        } else if (this.player === 0) {
+          if (this.playerInterrupt) {
+            this.winner = this.playerInterrupt === 1 ? 2 : 1;
+            this.gameState = 'results-interrupt';
+            this.time = rules.endTime;
+            this.player = -1;
+          } else {
+            if (vote1.length === vote2.length) this.winner = 0;
+            else this.winner = vote1.length > vote2.length ? 1 : 2;
+            this.gameState = 'results';
+            this.time = rules.endTime;
+            this.player = -1;
+          }
+        } else if (this.player === -1) {
+          this.gameState = 'ended';
+          clearInterval(this.timer);
+          endCallback();
         }
-      } else if (this.player === -1) {
-        this.gameState = 'ended';
-        clearInterval(this.timer);
-        endCallback();
+      } else {
+        if (this.player === 1) {
+          this.player = 0;
+          this.gameState = 'voting';
+          this.time = rules.votingTime;
+        } else if (this.player === 0) {
+          if (this.playerInterrupt) {
+            this.winner = this.playerInterrupt === 1 ? 2 : 1;
+            this.gameState = 'results-interrupt';
+            this.time = rules.endTime;
+            this.player = -1;
+          } else {
+            if (vote1.length === vote2.length) this.winner = 0;
+            else this.winner = vote1.length > vote2.length ? 1 : 2;
+            this.gameState = 'results';
+            this.time = rules.endTime;
+            this.player = -1;
+          }
+        } else if (this.player === -1) {
+          this.gameState = 'ended';
+          clearInterval(this.timer);
+          endCallback();
+        }
       }
     }
   }, 1000);

@@ -51,6 +51,7 @@ function manageConnection(io, namespace, roomDB) {
             timeLimit: 10,
             votingTime: 10,
             endTime: 5,
+            turnMode: true,
           };
           rooms[namespace].style = res[0].style;
           rooms[namespace].description = res[0].description;
