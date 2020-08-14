@@ -5,7 +5,10 @@ function getFeaturedRooms() {
       res.forEach((room) => {
         if (room.namespace === '/') return;
         let li = document.createElement('li');
-        li.style.background = `url(${room.style.background})`;
+        li.style.background = `url(${
+          room.style.background ||
+          getComputedStyle(document.documentElement).getPropertyValue('--banner-background')
+        })`;
         li.style.backgroundSize = '100% 100%';
         li.innerHTML = `<h3><a href = './c${room.namespace}'>c${room.namespace}</h3></a>
             <h6>${room.description}</h6>
