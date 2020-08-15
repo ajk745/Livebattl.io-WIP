@@ -80,7 +80,13 @@ router.get('/rooms-featured', (req, res, next) => {
       if (err) res.status(400).send('Database error');
       else if (data.length === 0) res.status(400).send('Room not found in database');
       else {
-        res.json(data);
+        res.json(
+          data
+            .sort((room1, room2) => {
+              return (room2.players || 0) - (room1.players || 0);
+            })
+            .slice(0, 3)
+        );
       }
     });
 });
