@@ -18,22 +18,20 @@ db.connect('VSCam', (err) => {
   }
 });
 
-module.exports = function createRoom(roomData) {
+module.exports = function createRoom(roomData, callback) {
   if (!roomData) return;
   var roomProps = [
     'namespace',
     'description',
-    ['rules', ['maxQueue', 'maxSpec', 'timeLimit', 'votingTime', 'endTime']],
+    ['rules', ['maxQueue', 'maxSpec', 'timeLimit', 'votingTime', 'endTime', 'turnMode']],
     ['style', ['mainColor', 'secondaryColor', 'background']],
   ];
   function checkProperties(data, props) {
     var newData = {};
-    for (var prop in props) {
-      if (data[prop]) {
-        if (prop === 'rules' || prop === 'style')
-          newData[prop] = checkProperties(data[prop], prop[1]);
-        else newData[prop] = data[prop];
-      }
+    for (let i = 0; i < props.length; i++) {
+      if (data[props[i]]) newData[props[i]] = data[props[i]];
+      else if (props[i][0] === 'rules' || props[i][0] === 'style')
+        newData[props[i][0]] = checkProperties(data[props[i][0]], props[i][1]);
     }
     return newData;
   }
@@ -47,7 +45,10 @@ module.exports = function createRoom(roomData) {
       else {
         console.log('Success creating new room: ' + roomData.namespace);
         namespaces.push(roomData.namespace);
-        fs.writeFile(path.join(__dirname, '..', 'namespaces.txt'), namespaces.join('\n'));
+        fs.writeFile(path.join(__dirname, '..', 'namespaces.txt'), namespaces.join('\n'), () => {
+          console.log('Added' + roomData.namespace + 'to local room list');
+          callback();
+        });
       }
     });
 };
