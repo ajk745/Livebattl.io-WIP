@@ -17,6 +17,7 @@
     />
     <script src="../javascripts/home/get-elements.js"></script>
     <script src="../javascripts/home/get-featured-room.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <title>Eugene.io Bugs & Suggestions</title>
   </head>
   <body>
@@ -33,7 +34,12 @@
         </div></div
       >
     </div>
-    <form method="post" action="../api/bug-report" enctype="application/x-www-form-urlencoded">
+    <form
+      id="bug-form"
+      method="post"
+      action="../api/bug-report"
+      enctype="application/x-www-form-urlencoded"
+    >
       <label>What are you submitting?</label><br />
       <select name="reportType" id="report-type" required
         ><option value="bug">A Bug Report</option>
@@ -50,7 +56,18 @@
         required
       ></textarea>
       <br />
-      <input type="submit" value="Submit" />
+      <script>
+        function captchaVerify() {
+          document.getElementById('form-submit').removeAttribute('disabled');
+        }
+      </script>
+      <div
+        class="g-recaptcha"
+        data-sitekey="6Le4sr8ZAAAAAMCrJIlH2RDIAAdaH8jb2AG_bW-l"
+        data-callback="captchaVerify"
+      ></div>
+      <br />
+      <input id="form-submit" type="submit" value="Submit" disabled />
     </form>
   </body>
 </html>
