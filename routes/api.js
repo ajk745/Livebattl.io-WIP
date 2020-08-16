@@ -3,6 +3,8 @@ var router = express.Router();
 var path = require('path');
 var fs = require('fs');
 var db = require('../db');
+var request = require('request');
+var queryString = require('querystring');
 
 db.connect('VSCam', (err) => {
   if (err) {
@@ -95,20 +97,33 @@ var bodyParser = require('body-parser');
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 router.post('/bug-report', (req, res) => {
-  db.getDB('VSCam')
-    .collection('bug-reports')
-    .insertOne(
-      {
-        userIP: req.header('x-forwarded-for') || req.connection.remoteAddress,
-        reportType: req.body.reportType,
-        reportText: req.body.reportText,
-      },
-      (err, res) => {
-        if (err) console.log('Failed to push a bug report form post to database');
-        else console.log('Success pushing a bug report form post to database');
-      }
-    );
-  res.sendFile(path.join(__dirname, '..', 'public', 'report-success.html'));
+  var query = queryString.stringify({
+    secret: process.env.CAPTCHA_SECRET,
+    response: req.body['g-recaptcha-response'],
+  });
+  var verifyURL = `https://google.com/recaptcha/api/siteverify?${query}`;
+
+  request(verifyURL, (err, fetchRes, body) => {
+    body = JSON.parse(body);
+    if (body.success !== undefined && !body.success)
+      res.sendFile(path.join(__dirname, '..', 'public', 'report-fail.html'));
+    else {
+      db.getDB('VSCam')
+        .collection('bug-reports')
+        .insertOne(
+          {
+            userIP: req.header('x-forwarded-for') || req.connection.remoteAddress,
+            reportType: req.body.reportType,
+            reportText: req.body.reportText,
+          },
+          (err, res) => {
+            if (err) console.log('Failed to push a bug report form post to database');
+            else console.log('Success pushing a bug report form post to database');
+          }
+        );
+      res.sendFile(path.join(__dirname, '..', 'public', 'report-success.html'));
+    }
+  });
 });
 
 module.exports = router;
