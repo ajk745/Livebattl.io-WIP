@@ -17,7 +17,6 @@
     />
     <script src="../javascripts/home/get-elements.js"></script>
     <script src="../javascripts/home/get-featured-room.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <title>Eugene.io Bugs & Suggestions</title>
   </head>
   <body>
@@ -34,40 +33,6 @@
         </div></div
       >
     </div>
-    <form
-      id="bug-form"
-      method="post"
-      action="../api/bug-report"
-      enctype="application/x-www-form-urlencoded"
-    >
-      <label>What are you submitting?</label><br />
-      <select name="reportType" id="report-type" required
-        ><option value="bug">A Bug Report</option>
-        <option value="suggestion">A Feature Suggestion</option></select
-      >
-      <br />
-      <label>Please describe or explain the bug or feature suggestion as clearly as possible.</label
-      ><br />
-      <textarea
-        placeholder="Please include any images as links to Imgur or another large photo-sharing service"
-        name="reportText"
-        id="report-text"
-        rows="10"
-        required
-      ></textarea>
-      <br />
-      <script>
-        function captchaVerify() {
-          document.getElementById('form-submit').removeAttribute('disabled');
-        }
-      </script>
-      <div
-        class="g-recaptcha"
-        data-sitekey="6Ld9tr8ZAAAAAHjnIwz7x4DNeolxpKHXx4EweOM5"
-        data-callback="captchaVerify"
-      ></div>
-      <br />
-      <input id="form-submit" type="submit" value="Submit" disabled />
-    </form>
+    <h2>Captcha verification failed or bypassed. Stop trying to cheat...</h2>
   </body>
 </html>
