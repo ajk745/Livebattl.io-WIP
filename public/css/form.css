@@ -1,0 +1,16 @@
+form h2 {
+  margin: 0;
+  margin-bottom: 1em;
+}
+
+textarea {
+  padding-left: 0 !important;
+}
+
+#room-preview-container {
+  position: absolute;
+  height: 16em;
+  border: 1px solid red;
+  width: calc(50% - 8em);
+  margin-left: calc(50% + 4em);
+}
