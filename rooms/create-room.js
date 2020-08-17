@@ -27,7 +27,17 @@ module.exports = function createRoom(roomData, callback) {
     ['style', ['mainColor', 'secondaryColor', 'background']],
   ];
   function checkProperties(data, props) {
-    var newData = {};
+    var newData = {
+      name: null,
+      description: null,
+      rules: {
+        maxQueue: 50,
+        maxSpex: 500,
+        timeLimit: 90,
+        votingTime: 10,
+        endTime: 5,
+      },
+    };
     for (let i = 0; i < props.length; i++) {
       if (data[props[i]]) newData[props[i]] = data[props[i]];
       else if (props[i][0] === 'rules' || props[i][0] === 'style')

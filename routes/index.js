@@ -35,6 +35,10 @@ router.get('/roomerror', (req, res, next) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'not-found.html'));
 });
 
+router.get('/newroom', (req, res, next) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'new-room.html'));
+});
+
 router.get('/tos', (req, res, next) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'terms.html'));
 });

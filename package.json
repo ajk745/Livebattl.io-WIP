@@ -11,6 +11,7 @@
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "express": "^4.16.4",
+    "formidable": "^1.2.2",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "mongodb": "^3.5.9",

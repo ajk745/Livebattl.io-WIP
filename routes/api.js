@@ -126,4 +126,34 @@ router.post('/bug-report', (req, res) => {
   });
 });
 
+var formidable = require('formidable');
+var form = formidable.IncomingForm();
+router.post('/new-room', (req, res) => {
+  var body = {};
+  form
+    .parse(req)
+    .on('progress', (accepted, total) => {
+      //console.log(`accept:%d,total：%d`, accepted, total);
+    })
+    .on('field', (name, field) => {
+      body[name] = field;
+    })
+    .on('file', (name, file) => {
+      body[name] = file;
+    })
+    .on('aborted', (error) => {
+      let message = error.message;
+      res.render('error', { message, error });
+    })
+    .on('error', (err) => {
+      console.error('Error', err);
+      let message = err.message;
+      res.status(err.status || 500);
+      res.render('error', { message, error: err });
+    })
+    .on('end', () => {
+      res.json(body);
+    });
+});
+
 module.exports = router;

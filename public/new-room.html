@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="/../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/../css/form.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Oswald:400,300,700|EB+Garamond"
+      rel="stylesheet"
+    />
+    <script src="../javascripts/new-room/check-background-upload.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <title>Eugene.io Create New Room</title>
+  </head>
+  <body>
+    <div id="headerwrap"
+      ><header>
+        <h1 id="title">Create a New Room</h1>
+        <h4 id="description">Your suggestion for a new room...</h4></header
+      >
+      <div id="tab-container"
+        ><div id="tab">
+          <button class="tablink" onclick="document.location.href = '../'">Home</button>
+          <button class="tablink" onclick="document.location.href = '../rooms'">Rooms</button>
+          <button class="tablink" onclick="document.location.href = '../about'">About</button>
+        </div></div
+      >
+    </div>
+    <p
+      >Due to limited database storage and to prevent duplicate rooms, we will only accept
+      suggestions for new rooms, and add the best ones. In the future, we will add a system that
+      allows users to look over suggestions and choose which ones to add.</p
+    >
+    <form id="new-room-form" method="post" action="../api/new-room" enctype="multipart/form-data">
+      <h2>Room Info</h2>
+      <label>What is the name of the room?</label><br />
+      <h2
+        style="
+          margin-left: 0;
+          float: left;
+          margin-top: 0;
+          margin-bottom: 0;
+          height: 4rem;
+          vertical-align: middle;
+        "
+        >c/</h2
+      ><input type="text" name="namespace" id="namespace" required />
+      <br />
+      <label>Enter a description for the room.</label><br />
+      <textarea name="description" id="description" rows="10" required></textarea>
+      <script>
+        function captchaVerify() {
+          document.getElementById('form-submit').removeAttribute('disabled');
+        }
+      </script>
+      <h2>Room Rules</h2>
+      <label>What kind of gamemode?</label><br />
+      <select name="turnMode" id="turn-mode" required
+        ><option value="true">Players take turns</option>
+        <option value="false">Free-for-all</option></select
+      >
+      <br />
+      <label>Game Time (If players take turns, each player will get this amount of time)</label
+      ><br />
+      <input
+        type="number"
+        id="time-limit"
+        name="timeLimit"
+        min="30"
+        max="300"
+        style="width: 5%; margin-right: 1em;"
+      />
+      Seconds
+      <br />
+      <h2>Room Styling</h2>
+      <div id="room-preview-container">
+        <h2>Room Preview</h2>
+        <p>This will be implement as iframe soon</p>
+      </div>
+      <label>Main Color</label>
+      <br />
+      <input type="color" name="mainColor" id="main-color" value="#333333" />
+      <br />
+      <label>Secondary Color</label>
+      <br />
+      <input type="color" name="secondaryColor" id="secondary-color" value="#000000" />
+      <br />
+      <label>Background Image (Maximum Size: 4mb)</label>
+      <br />
+      <input type="file" accept="image/png, image/jpeg" name="background" id="background" />
+      <div
+        class="g-recaptcha"
+        data-sitekey="6Ld9tr8ZAAAAAHjnIwz7x4DNeolxpKHXx4EweOM5"
+        data-callback="captchaVerify"
+      ></div>
+      <br />
+      <input id="form-submit" type="submit" max value="Submit" disabled />
+    </form>
+  </body>
+</html>
