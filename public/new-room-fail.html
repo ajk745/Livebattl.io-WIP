@@ -10,37 +10,32 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <link rel="stylesheet" type="text/css" href="/../css/style.css" />
-    <link rel="stylesheet" type="text/css" href="/../css/rooms.css" />
+    <link rel="stylesheet" type="text/css" href="/../css/form.css" />
     <link
       href="https://fonts.googleapis.com/css?family=Oswald:400,300,700|EB+Garamond"
       rel="stylesheet"
     />
-    <script src="../javascripts/rooms/get-elements.js"></script>
-    <script src="../javascripts/rooms/get-rooms.js"></script>
-    <title>Eugene.io Rooms</title>
+    <script src="../javascripts/new-room/check-background-upload.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <title>Eugene.io Create New Room</title>
   </head>
   <body>
     <div id="headerwrap"
       ><header>
-        <h1 id="title">Rooms</h1>
-        <h4 id="description">Browse and search game rooms to join...</h4></header
+        <h1 id="title">Create a New Room</h1>
+        <h4 id="description">Your suggestion for a new room...</h4></header
       >
       <div id="tab-container"
         ><div id="tab">
           <button class="tablink" onclick="document.location.href = '../'">Home</button>
-          <button class="tablink" id="selected">Rooms</button>
+          <button class="tablink" onclick="document.location.href = '../rooms'">Rooms</button>
           <button class="tablink" onclick="document.location.href = '../about'">About</button>
         </div></div
       >
     </div>
-    <button id="new-room-button" onclick="document.location.href = '../newroom'"
-      >Create New Room (coming soon)</button
-    ><input type="text" id="room-search" placeholder="Search rooms" />
-    <p id="room-search-info"></p>
-    <ul id="roomlist"> </ul>
-
-    <script>
-      getRooms();
-    </script>
+    <h2
+      >Your submission for a new room failed. This is probably due to a verification failure, or
+      uploaded file size exceeding the limit.</h2
+    >
   </body>
 </html>

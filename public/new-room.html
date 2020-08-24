@@ -16,6 +16,7 @@
       rel="stylesheet"
     />
     <script src="../javascripts/new-room/check-background-upload.js"></script>
+    <script src="../javascripts/new-room/reload-preview.js"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <title>Eugene.io Create New Room</title>
   </head>
@@ -39,6 +40,10 @@
       allows users to look over suggestions and choose which ones to add.</p
     >
     <form id="new-room-form" method="post" action="../api/new-room" enctype="multipart/form-data">
+      <div id="room-preview-container">
+        <h2>Room Preview</h2>
+        <iframe src="../roompreview" id="room-preview" frameborder="0"></iframe>
+      </div>
       <h2>Room Info</h2>
       <label>What is the name of the room?</label><br />
       <h2
@@ -51,10 +56,17 @@
           vertical-align: middle;
         "
         >c/</h2
-      ><input type="text" name="namespace" id="namespace" required />
+      ><input
+        type="text"
+        placeholder="Please enter only English characters and numbers"
+        name="namespace"
+        id="namespace"
+        pattern="[A-Za-z0-9]+"
+        required
+      />
       <br />
       <label>Enter a description for the room.</label><br />
-      <textarea name="description" id="description" rows="10" required></textarea>
+      <textarea name="description" id="room-description" rows="10" required></textarea>
       <script>
         function captchaVerify() {
           document.getElementById('form-submit').removeAttribute('disabled');
@@ -80,10 +92,7 @@
       Seconds
       <br />
       <h2>Room Styling</h2>
-      <div id="room-preview-container">
-        <h2>Room Preview</h2>
-        <p>This will be implement as iframe soon</p>
-      </div>
+
       <label>Main Color</label>
       <br />
       <input type="color" name="mainColor" id="main-color" value="#333333" />

@@ -38,7 +38,7 @@ function addRoom(room) {
                 background-color: ${room.style ? room.style.mainColor || '' : ''};
               "
             ></div
-            ><h3>/c${room.namespace}</h3><h5>${room.description || ''}</h5><h5>${
+            ><h3>c${room.namespace}</h3><h5>${room.description || ''}</h5><h5>${
       room.rules && room.rules.turnMode ? 'Players take turns' : 'Free for all'
     } - Time Limit: ${
       room.rules && room.rules.timeLimit ? fancyTimeFormat(room.rules.timeLimit) : '0:10'

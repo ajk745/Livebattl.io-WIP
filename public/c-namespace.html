@@ -35,17 +35,23 @@
       <div id="cam-1">
         <h3 class="playername" id="playername1"></h3>
         <h3 class="timer" id="timer1"></h3>
-        <div class="video-overlay" player="1" onclick = "vote(this)">
+        <div class="video-padding">
+<div class="video-overlay" player="1" onclick = "vote(this)">
           <h3 class="overlay-text" player="1">Click to Vote</h3><video id="cam-1-embed" autoplay></video
         ></div>
+        </div>
+        
         <div><button class="btn" onclick="voteKick(this,1)" id = "votekick-button1">Vote to Kick</button><button class="btn" onclick="report(1)">Report</button><p id=votekick-text1></p> </div>
       </div>
       <div id="cam-2">
         <h3 class="playername" id="playername2"></h3>
         <h3 class="timer" id="timer2"></h3>
-        <div class="video-overlay" player = "2" onclick = "vote(this)">
+        <div class="video-padding">
+<div class="video-overlay" player = "2" onclick = "vote(this)">
           <h3 class="overlay-text" player = "2">Click to Vote</h3><video id="cam-2-embed" autoplay></video
         ></div>
+        </div>
+        
         <div><button class="btn" onclick="voteKick(this,2)" id="votekick-button2">Vote to Kick</button><button class="btn" onclick="report(2)">Report</button> <p id= "votekick-text2"></p></div>
       </div>
       <script src="/../javascripts/c-namespace/read-camera-stream.js"></script>

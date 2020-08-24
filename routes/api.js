@@ -74,6 +74,26 @@ router.get('/room-thumbnail/:namespace', (req, res, next) => {
   } else res.status(400).send('Room not found');
 });
 
+router.get('/room-background/:namespace', (req, res, next) => {
+  if (namespaces.indexOf('/' + req.params.namespace) !== -1) {
+    db.getDB('VSCam')
+      .collection('rooms')
+      .find({ namespace: '/' + req.params.namespace })
+      .toArray((err, data) => {
+        if (err) res.status(400).send('Database error');
+        else if (data.length === 0) res.status(400).send('Room not found in database');
+        else {
+          var img = data[0].style.background ? data[0].style.background.buffer : null;
+          res.writeHead(200, {
+            'Content-Type': 'image/png',
+            'Content-Length': img ? img.length : 0,
+          });
+          res.end(img);
+        }
+      });
+  } else res.status(400).send('Room not found');
+});
+
 router.get('/rooms-featured', (req, res, next) => {
   db.getDB('VSCam')
     .collection('rooms')
@@ -129,17 +149,22 @@ router.post('/bug-report', (req, res) => {
 var formidable = require('formidable');
 var form = formidable.IncomingForm();
 router.post('/new-room', (req, res) => {
-  var body = {};
+  var formBody = {};
+  var fileSize = 0;
+  const BYTE = 1048576;
   form
     .parse(req)
     .on('progress', (accepted, total) => {
       //console.log(`accept:%d,total：%d`, accepted, total);
     })
     .on('field', (name, field) => {
-      body[name] = field;
+      formBody[name] = field;
     })
     .on('file', (name, file) => {
-      body[name] = file;
+      fileSize += file.size;
+      if (fileSize > 4 * BYTE) {
+        return res.sendFile(path.join(__dirname, '..', 'public', 'new-room-fail.html'));
+      } else formBody[name] = fs.readFileSync(file.path);
     })
     .on('aborted', (error) => {
       let message = error.message;
@@ -152,7 +177,32 @@ router.post('/new-room', (req, res) => {
       res.render('error', { message, error: err });
     })
     .on('end', () => {
-      res.json(body);
+      var query = queryString.stringify({
+        secret: process.env.CAPTCHA_SECRET,
+        response: formBody['g-recaptcha-response'],
+      });
+      var verifyURL = `https://google.com/recaptcha/api/siteverify?${query}`;
+      request(verifyURL, (err, fetchRes, body) => {
+        if (body.success !== undefined && !body.success)
+          res.sendFile(path.join(__dirname, '..', 'public', 'new-room-fail.html'));
+        else {
+          formBody['g-recaptcha-response'] = null;
+          if (formBody.namespace[0] !== '/') formBody.namespace = '/' + formBody.namespace;
+          db.getDB('VSCam')
+            .collection('new-rooms')
+            .insertOne(
+              {
+                ...formBody,
+                userIP: req.header('x-forwarded-for') || req.connection.remoteAddress,
+              },
+              (err, res) => {
+                if (err) console.log('Failed to push a new room form post to database');
+                else console.log('Success pushing a new room form post to database');
+              }
+            );
+          res.sendFile(path.join(__dirname, '..', 'public', 'new-room-success.html'));
+        }
+      });
     });
 });
 
