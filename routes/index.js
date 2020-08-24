@@ -39,6 +39,10 @@ router.get('/newroom', (req, res, next) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'new-room.html'));
 });
 
+router.get('/roompreview', (req, res, next) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'room-preview.html'));
+});
+
 router.get('/tos', (req, res, next) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'terms.html'));
 });

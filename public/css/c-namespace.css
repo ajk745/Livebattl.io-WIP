@@ -121,7 +121,7 @@ video {
   border: 5px;
   border-color: gold;
   object-fit: cover;
-  height: 30em;
+  height: 100%;
 }
 
 ol li {

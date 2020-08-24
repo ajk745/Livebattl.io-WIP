@@ -39,7 +39,7 @@ function report(player) {
   socket.emit('report', { player: player, reportText: reportText });
 }
 
-socket.on('page-style', (style, descriptionText) => {
+socket.on('page-style', async (style, descriptionText) => {
   title.innerHTML = 'c' + namespace;
   description.innerHTML = descriptionText || '';
 
@@ -48,8 +48,23 @@ socket.on('page-style', (style, descriptionText) => {
       document.documentElement.style.setProperty('--main-color', style.mainColor);
     if (style.secondaryColor)
       document.documentElement.style.setProperty('--secondary-color', style.secondaryColor);
-    if (style.background)
-      document.documentElement.style.setProperty('--banner-background', `url(${style.background})`);
+    if (style.background) {
+      if (
+        await fetch(style.background).then((res) => {
+          return res.ok;
+        })
+      ) {
+        document.documentElement.style.setProperty(
+          '--banner-background',
+          `url(${style.background})`
+        );
+      }
+    } else {
+      document.documentElement.style.setProperty(
+        '--banner-background',
+        `url(../api/room-background${namespace})`
+      );
+    }
   }
 });
 
