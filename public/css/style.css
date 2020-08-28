@@ -158,12 +158,14 @@ header {
 }
 
 #footerwrap {
-  border-top: 1px black solid;
+  border-top: 1px var(--main-color, #333) solid;
+  background: var(--banner-background, url(../images/header-bg.jpg)) no-repeat center;
+  color: white;
+  background-size: cover;
   margin-bottom: 0;
 }
 
 #footerwrap p {
-  color: var(--main-color, #333);
   font-style: italic;
   font-size: smaller;
   margin-bottom: 0;
