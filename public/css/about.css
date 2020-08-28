@@ -3,3 +3,12 @@
   float: left;
   margin-left: 2em;
 }
+
+.section {
+  word-wrap: break-word;
+  height: auto;
+  overflow: auto;
+}
+a {
+  color: #555;
+}
