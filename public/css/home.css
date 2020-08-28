@@ -1,3 +1,13 @@
+body {
+  background: var(--banner-background, url(../images/header-bg.jpg)) no-repeat center;
+  color: white;
+  background-size: cover;
+}
+
+#footerwrap {
+  background: transparent;
+}
+
 #container-close {
   color: white;
   margin-left: calc(100% - 2em);
