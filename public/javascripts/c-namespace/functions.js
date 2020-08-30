@@ -1,10 +1,26 @@
 function joinQueue() {
-  var joinButton = document.getElementById('queue-button');
-  if (queue.length < rules.maxQueue) {
-    socket.emit('join-queue');
-    joinButton.innerHTML = 'Leave Queue';
-    joinButton.setAttribute('onclick', 'leaveQueue()');
+  if (!navigator.mediaDevices) {
+    alert(
+      'Failed to read video/audio input. Make sure to allow camera and microphone usage on this site. You have been removed from the queue.'
+    );
+    return;
   }
+  navigator.mediaDevices
+    .getUserMedia({ video: true, audio: true })
+    .then(() => {
+      var joinButton = document.getElementById('queue-button');
+      if (queue.length < rules.maxQueue) {
+        socket.emit('join-queue');
+        joinButton.innerHTML = 'Leave Queue';
+        joinButton.setAttribute('onclick', 'leaveQueue()');
+      }
+    })
+    .catch((err) => {
+      alert(
+        'Failed to read video/audio input. Make sure to allow camera and microphone usage on this site. You have been removed from the queue.'
+      );
+      return;
+    });
 }
 
 function leaveQueue() {

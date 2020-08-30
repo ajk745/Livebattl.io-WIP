@@ -9,24 +9,41 @@ function Stream(cam) {
   this.cam = cam;
   this.rec = null;
 
-  navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
-    this.cameraStream = stream;
-    switch (cam) {
-      case 1:
-        video1.srcObject = stream;
-        video1.volume = 0;
-        video1.play();
-        break;
-      case 2:
-        video2.srcObject = stream;
-        video2.volume = 0;
-        video2.play();
-        break;
-      default:
-        break;
-    }
-    if (this.cam !== null) record(stream, delayMS);
-  });
+  if (!navigator.mediaDevices) {
+    alert(
+      'Failed to read video/audio input. Make sure to allow camera and microphone usage on this site. You have been removed from the queue.'
+    );
+    socket.emit('stream-error');
+    this.endStream();
+  }
+
+  navigator.mediaDevices
+    .getUserMedia({ video: true, audio: true })
+    .then((stream) => {
+      this.cameraStream = stream;
+      switch (cam) {
+        case 1:
+          video1.srcObject = stream;
+          video1.volume = 0;
+          video1.play();
+          break;
+        case 2:
+          video2.srcObject = stream;
+          video2.volume = 0;
+          video2.play();
+          break;
+        default:
+          break;
+      }
+      if (this.cam !== null) record(stream, delayMS);
+    })
+    .catch((err) => {
+      alert(
+        'Failed to read video/audio input. Make sure to allow camera and microphone usage on this site. You have been removed from the queue.'
+      );
+      socket.emit('stream-error');
+      this.endStream();
+    });
 
   var record = (stream, ms) => {
     this.rec = new MediaRecorder(stream, {
@@ -60,7 +77,7 @@ function Stream(cam) {
   });
 
   this.endStream = function () {
-    this.rec.stop();
+    if (this.rec) this.rec.stop();
     if (this.cameraStream) {
       this.cameraStream.getTracks().forEach((track) => track.stop());
     }

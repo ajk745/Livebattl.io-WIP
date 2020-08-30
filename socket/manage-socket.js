@@ -94,6 +94,30 @@ function manageConnection(io, namespace, roomDB) {
           rooms[namespace] = null;
         }
       });
+      socket.on('stream-error', () => {
+        console.log('User Stream Error: ' + socket.id);
+
+        if (room.cam1 === socket) {
+          room.cam1 = null;
+          room['stream1'] = null;
+          socket.broadcast.emit('stream-ended', 1);
+          if (room.currentGame) room.currentGame.interrupt(1);
+        }
+        if (room.cam2 === socket) {
+          room.cam2 = null;
+          room['stream2'] = null;
+          socket.broadcast.emit('stream-ended', 2);
+          if (room.currentGame) room.currentGame.interrupt(2);
+        }
+
+        if (room.queue.indexOf(socket) !== -1) room.queue.splice(room.queue.indexOf(socket), 1);
+        if (room.spectators.indexOf(socket) !== -1)
+          room.spectators.splice(room.spectators.indexOf(socket), 1);
+        room.userCount--;
+        if (room.userCount === 0) {
+          rooms[namespace] = null;
+        }
+      });
     }
   });
   setInterval(() => {
