@@ -47,4 +47,8 @@ router.get('/tos', (req, res, next) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'terms.html'));
 });
 
+router.get('/sponsor', (req, res, next) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'sponsor.html'));
+});
+
 module.exports = router;
