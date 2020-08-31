@@ -3,7 +3,7 @@ var data = getUrlVars();
 document.addEventListener('DOMContentLoaded', () => {
   if (data.namespace) document.getElementById('title').innerHTML = 'c/' + decodeURI(data.namespace);
   if (data.description)
-    document.getElementById('description').innerHTML = decodeURL(data.description);
+    document.getElementById('description').innerHTML = decodeURI(data.description);
   if (data.mainColor) document.documentElement.style.setProperty('--main-color', data.mainColor);
   if (data.secondaryColor)
     document.documentElement.style.setProperty('--secondary-color', data.secondaryColor);
