@@ -7,7 +7,7 @@
     <script src=></script>
     <script>
       var namespace = '/' + window.location.pathname.split('/')[2]
-      document.title = `Eugene.io: /c${namespace}`
+      document.title = `Battl.live: /c${namespace}`
       console.log("Connecting to socket namespace " + namespace)
       var socket = io(namespace || '/');
       socket.on('room-not-found', ()=> window.location = '../roomerror')
@@ -24,7 +24,7 @@
     <link rel="stylesheet" type="text/css" href="/../css/style.css"/>
     <link rel="stylesheet" type="text/css" href="/../css/c-namespace.css" />
     <link href="https://fonts.googleapis.com/css?family=Oswald:400,300,700|EB+Garamond" rel="stylesheet">
-    <title>Eugene.io Room</title>
+    <title>Battl.live Room</title>
   </head>
   <body>
     <div id = "headerwrap">    <header>
