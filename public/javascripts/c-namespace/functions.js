@@ -65,21 +65,25 @@ socket.on('page-style', async (style, descriptionText) => {
     if (style.secondaryColor)
       document.documentElement.style.setProperty('--secondary-color', style.secondaryColor);
     if (style.background) {
-      if (
-        await fetch(style.background).then((res) => {
-          return res.ok;
+      var backgroundLinkAvaliable = await fetch(style.background)
+        .then((res) => {
+          if (res.ok) return true;
+          else return false;
         })
-      ) {
+        .catch(() => {
+          return false;
+        });
+      if (backgroundLinkAvaliable) {
         document.documentElement.style.setProperty(
           '--banner-background',
           `url(${style.background})`
         );
+      } else {
+        document.documentElement.style.setProperty(
+          '--banner-background',
+          `url(../api/room-background${namespace})`
+        );
       }
-    } else {
-      document.documentElement.style.setProperty(
-        '--banner-background',
-        `url(../api/room-background${namespace})`
-      );
     }
   }
 });
