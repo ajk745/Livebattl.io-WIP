@@ -27,17 +27,7 @@ module.exports = function createRoom(roomData, callback) {
     ['style', ['mainColor', 'secondaryColor', 'background']],
   ];
   function checkProperties(data, props) {
-    var newData = {
-      name: null,
-      description: null,
-      rules: {
-        maxQueue: 50,
-        maxSpex: 500,
-        timeLimit: 90,
-        votingTime: 10,
-        endTime: 5,
-      },
-    };
+    var newData = {};
     for (let i = 0; i < props.length; i++) {
       if (data[props[i]]) newData[props[i]] = data[props[i]];
       else if (props[i][0] === 'rules' || props[i][0] === 'style')
@@ -46,7 +36,12 @@ module.exports = function createRoom(roomData, callback) {
     return newData;
   }
   roomData = checkProperties(roomData, roomProps);
+  roomData.rules = {
+    ...{ maxQueue: 50, maxSpex: 500, timeLimit: 90, votingTime: 10, endTime: 5 },
+    ...roomData.rules,
+  };
   console.log(roomData);
+  if (roomData.namespace[0] !== '/') roomData.namespace[0] = '/' + roomData.namespace[0];
   //TODO Size limiter
   db.getDB('VSCam')
     .collection('rooms')
@@ -56,7 +51,7 @@ module.exports = function createRoom(roomData, callback) {
         console.log('Success creating new room: ' + roomData.namespace);
         namespaces.push(roomData.namespace);
         fs.writeFile(path.join(__dirname, '..', 'namespaces.txt'), namespaces.join('\n'), () => {
-          console.log('Added' + roomData.namespace + 'to local room list');
+          console.log('Added ' + roomData.namespace + ' to local room list');
           callback();
         });
       }

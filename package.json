@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "create-room": "node ./rooms/create-room-console.js"
+    "create-room": "node ./rooms/create-room-console.js",
+    "approve-room": "node ./rooms/create-room-by-database-id.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

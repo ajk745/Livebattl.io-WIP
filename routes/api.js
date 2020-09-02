@@ -186,13 +186,26 @@ router.post('/new-room', (req, res) => {
         if (body.success !== undefined && !body.success)
           res.sendFile(path.join(__dirname, '..', 'public', 'new-room-fail.html'));
         else {
-          formBody['g-recaptcha-response'] = null;
-          if (formBody.namespace[0] !== '/') formBody.namespace = '/' + formBody.namespace;
+          var newRoom = {
+            namespace: formBody.namespace,
+            description: formBody.description,
+            rules: {
+              turnMode: formBody.turnMode,
+              timeLimit: formBody.timeLimit,
+            },
+            style: {
+              mainColor: formBody.mainColor,
+              secondaryColor: formBody.secondaryColor,
+              background: formBody.background,
+            },
+          };
+          if (newRoom.namespace[0] !== '/') newRoom.namespace = '/' + newRoom.namespace;
+
           db.getDB('VSCam')
             .collection('new-rooms')
             .insertOne(
               {
-                ...formBody,
+                ...newRoom,
                 userIP: req.header('x-forwarded-for') || req.connection.remoteAddress,
               },
               (err, res) => {
