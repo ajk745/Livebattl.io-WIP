@@ -116,7 +116,7 @@ router.get('/rooms-featured', (req, res, next) => {
 var bodyParser = require('body-parser');
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
-router.post('/bug-report', (req, res) => {
+router.post('/bug-report', (req, res, next) => {
   var query = queryString.stringify({
     secret: process.env.CAPTCHA_SECRET,
     response: req.body['g-recaptcha-response'],
@@ -148,15 +148,12 @@ router.post('/bug-report', (req, res) => {
 
 var formidable = require('formidable');
 var form = formidable.IncomingForm();
-router.post('/new-room', (req, res) => {
+router.post('/new-room', (req, res, next) => {
   var formBody = {};
   var fileSize = 0;
   const BYTE = 1048576;
   form
     .parse(req)
-    .on('progress', (accepted, total) => {
-      //console.log(`accept:%d,total：%d`, accepted, total);
-    })
     .on('field', (name, field) => {
       formBody[name] = field;
     })

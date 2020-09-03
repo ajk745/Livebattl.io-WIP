@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var fs = require('fs');
+const { exception } = require('console');
 
 var namespaces = fs
   .readFileSync(path.join(__dirname, '..', 'namespaces.txt'))
@@ -49,6 +50,10 @@ router.get('/tos', (req, res, next) => {
 
 router.get('/sponsor', (req, res, next) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'sponsor.html'));
+});
+
+router.get('/testerror', (req, res, next) => {
+  console.log(4 / 0);
 });
 
 module.exports = router;
