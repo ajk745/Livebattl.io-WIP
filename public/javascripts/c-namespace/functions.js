@@ -65,14 +65,21 @@ socket.on('page-style', async (style, descriptionText) => {
     if (style.secondaryColor)
       document.documentElement.style.setProperty('--secondary-color', style.secondaryColor);
     if (style.background) {
-      var backgroundLinkAvaliable = await fetch(style.background)
-        .then((res) => {
-          if (res.ok) return true;
-          else return false;
-        })
-        .catch(() => {
-          return false;
-        });
+      var backgroundLinkAvaliable =
+        typeof style.background === 'string' && style.background.length < 512
+          ? await fetch(style.background)
+              .then((res) => {
+                if (res.ok) return true;
+                else {
+                  console.log('Failed to fetch background from URL');
+                  return false;
+                }
+              })
+              .catch(() => {
+                console.log('Failed to fetch background from URL');
+                return false;
+              })
+          : false;
       if (backgroundLinkAvaliable) {
         document.documentElement.style.setProperty(
           '--banner-background',
