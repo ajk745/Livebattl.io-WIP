@@ -1,4 +1,7 @@
 var delayMS = 100;
+var chunks1 = [],
+  chunks2 = [];
+//GLOBAL TEST
 
 var video1 = document.getElementById('cam-1-embed'),
   video2 = document.getElementById('cam-2-embed');
@@ -99,9 +102,9 @@ function Stream(cam) {
 function getStream() {
   var stream1Ready = true;
   var stream2Ready = true;
-  var chunks1 = [],
-    chunks2 = [];
-  //recieve video chunks from server
+
+  setMSE(chunks1, chunks2);
+  //recieve video chunks from server.
   socket.on('stream-frag', (data) => {
     switch (data.cam) {
       case 1:
@@ -119,14 +122,6 @@ function getStream() {
           data.cluster
         ) {
           sourceBuffer1.appendBuffer(chunks1.shift());
-          if (!mediaSource1.isLive && sourceBuffer1.buffered.length > 0) {
-            let latestTime = sourceBuffer1.buffered.end(sourceBuffer1.buffered.length - 1);
-            setTimeout(() => {
-              video1.currentTime = latestTime;
-            }, delayMS);
-            //video1.currentTime = latestTime;
-            mediaSource1.isLive = true;
-          }
         }
         break;
       case 2:
@@ -144,14 +139,6 @@ function getStream() {
           data.cluster
         ) {
           sourceBuffer2.appendBuffer(chunks2.shift());
-          if (!mediaSource2.isLive && sourceBuffer2.buffered.length > 0) {
-            let latestTime = sourceBuffer2.buffered.end(sourceBuffer2.buffered.length - 1);
-            setTimeout(() => {
-              video2.currentTime = latestTime;
-            }, delayMS);
-            //video2.currentTime = latestTime;
-            mediaSource2.isLive = true;
-          }
         }
         break;
     }
@@ -208,6 +195,12 @@ function setMSE() {
     sourceBuffer1.addEventListener('abort', function (e) {
       console.log('abort: ' + mediaSource1.readyState, e);
     });
+    sourceBuffer1.addEventListener('update', function () {
+      if (chunks1.length !== 0) {
+        sourceBuffer1.appendBuffer(chunks1.shift());
+        console.log('test1');
+      }
+    });
   });
   mediaSource1.isLive = false;
   mediaSource2.addEventListener('sourceopen', function () {
@@ -218,6 +211,9 @@ function setMSE() {
     });
     sourceBuffer2.addEventListener('abort', function (e) {
       console.log('abort: ' + mediaSource2.readyState, e);
+    });
+    sourceBuffer2.addEventListener('update', function () {
+      if (chunks2.length !== 0) sourceBuffer2.appendBuffer(chunks2.shift());
     });
   });
   mediaSource2.isLive = false;
@@ -240,8 +236,18 @@ var sourceBuffer1 = null;
 var mediaSource2 = new MediaSource();
 var sourceBuffer2 = null;
 
+setInterval(() => {
+  if (mediaSource1 && sourceBuffer1 && sourceBuffer1.buffered.length > 0) {
+    let latestTime = sourceBuffer1.buffered.end(sourceBuffer1.buffered.length - 1);
+    if (latestTime - video1.currentTime > 2) video1.currentTime = latestTime - 1;
+  }
+  if (mediaSource2 && sourceBuffer2 && sourceBuffer2.buffered.length > 0) {
+    let latestTime = sourceBuffer2.buffered.end(sourceBuffer2.buffered.length - 1);
+    if (latestTime - video2.currentTime > 2) video2.currentTime = latestTime - 1;
+  }
+}, 1000);
+
 video1.src = URL.createObjectURL(mediaSource1);
 video2.src = URL.createObjectURL(mediaSource2);
 
-setMSE();
 getStream();
