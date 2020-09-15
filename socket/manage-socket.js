@@ -4,6 +4,7 @@ var getThumbnail = require('./game/get-thumbnail');
 var path = require('path');
 var fs = require('fs');
 var db = require('../db');
+const { time } = require('console');
 
 var namespaces = fs
   .readFileSync(path.join(__dirname, '..', 'namespaces.txt'))
@@ -189,9 +190,12 @@ function handlePlayerFunctions(io, socket, room, roomDB) {
     }
   });
   socket.on('chat-message', (message) => {
-    message = `<b>${socket.name}</b>: ${message}`;
-    socket.broadcast.emit('chat-message', message);
-    socket.emit('chat-message', message);
+    if (message.length < 512 && Date.now() - (socket.lastMessage || 0) > 1000) {
+      message = `<b>${socket.name}</b>: ${message}`;
+      socket.broadcast.emit('chat-message', message);
+      socket.emit('chat-message', message);
+      socket.lastMessage = Date.now();
+    }
   });
 }
 

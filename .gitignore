@@ -1,3 +1,5 @@
 node_modules
 .env
 namespaces.txt
+bin/cert.pem
+bin/key.pem
