@@ -3,3 +3,4 @@
 /RoastMe
 /Dance
 /RapBattles
+/debate
