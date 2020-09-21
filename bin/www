@@ -15,21 +15,19 @@ var path = require('path');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '443');
+var port = normalizePort(process.env.PORT || '80');
 //app.set('port', port);
 
 /**
- * Create HTTPS server.
+ * Create HTTP server.
  */
 
-const options = {
-  key: fs.readFileSync(path.join(__dirname, 'key.pem')),
-  cert: fs.readFileSync(path.join(__dirname, 'cert.pem')),
-};
+//const options = {
+//  key: fs.readFileSync(path.join(__dirname, 'key.pem')),
+//  cert: fs.readFileSync(path.join(__dirname, 'cert.pem')),
+//};
 
-console.log(options);
-
-var server = https.createServer(options, app);
+var server = http.createServer(app);
 
 /**
  * Create Socket.
