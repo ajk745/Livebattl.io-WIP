@@ -4,3 +4,4 @@ namespaces.txt
 namespaces
 bin/cert.pem
 bin/key.pem
+dist

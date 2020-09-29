@@ -4,3 +4,6 @@
 /Dance
 /RapBattles
 /debate
+/PoliticalDebate
+/random
+/test

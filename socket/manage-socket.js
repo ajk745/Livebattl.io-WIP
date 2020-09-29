@@ -66,7 +66,7 @@ function manageConnection(io, namespace, roomDB) {
 
     //TESTING; hope this isn't too expensive
     function checkDuplicateIP(socket, room) {
-      var ip = socket.request.connection.remoteAddress;
+      var ip = socket.client.conn.remoteAddress;
       if (room.cam1 && room.cam1.request.connection.remoteAddress === ip) return false;
       if (room.cam2 && room.cam2.request.connection.remoteAddress === ip) return false;
       for (let i = 0; i < room.queue.length; i++) {
@@ -80,7 +80,7 @@ function manageConnection(io, namespace, roomDB) {
 
     function manageSocket(room) {
       if (!checkDuplicateIP(socket, room)) {
-        socket.emit('duplicate-ip');
+        socket.emit('duplicate-client');
         setTimeout(socket.disconnect, 1000);
         console.log(
           `Socket ${socket.id} joined with duplicate IP ${socket.request.connection.remoteAddress}. Terminating connection`

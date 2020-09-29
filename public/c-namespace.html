@@ -9,10 +9,10 @@
       var namespace = '/' + window.location.pathname.split('/')[2]
       document.title = `Battl.live: /c${namespace}`
       console.log("Connecting to socket namespace " + namespace)
-      var socket = io(namespace || '/');
+      var socket = io(namespace || '/', {transports: ['websocket']});
       socket.on('room-not-found', ()=> window.location = '../roomerror');
       var connectionAllowed = true;
-      socket.on('duplicate-ip', () => {
+      socket.on('duplicate-client', () => {
         connectionAllowed = false;
         console.log('This client is a duplicate of one already in the room.');
         alert(
