@@ -66,14 +66,35 @@ function manageConnection(io, namespace, roomDB) {
 
     //TESTING; hope this isn't too expensive
     function checkDuplicateIP(socket, room) {
-      var ip = socket.client.conn.remoteAddress;
-      if (room.cam1 && room.cam1.request.connection.remoteAddress === ip) return false;
-      if (room.cam2 && room.cam2.request.connection.remoteAddress === ip) return false;
+      var ip =
+        socket.handshake.headers['x-forwarded-for'].split(',')[0] ||
+        socket.conn.remoteAddress.split(':')[3];
+      if (!ip) return false;
+      if (
+        room.cam1 &&
+        (room.cam1.handshake.headers['x-forwarded-for'].split(',')[0] ||
+          room.cam1.conn.remoteAddress.split(':')[3]) === ip
+      )
+        return false;
+      if (
+        room.cam2 &&
+        (room.cam2.handshake.headers['x-forwarded-for'].split(',')[0] ||
+          room.cam2.conn.remoteAddress.split(':')[3]) === ip
+      )
+        return false;
       for (let i = 0; i < room.queue.length; i++) {
-        if (room.queue[i].request.connection.remoteAddress === ip) return false;
+        if (
+          (room.queue[i].handshake.headers['x-forwarded-for'].split(',')[0] ||
+            room.queue[i].conn.remoteAddress.split(':')[3]) === ip
+        )
+          return false;
       }
       for (let i = 0; i < room.spectators.length; i++) {
-        if (room.spectators[i].request.connection.remoteAddress === ip) return false;
+        if (
+          (room.spectators[i].handshake.headers['x-forwarded-for'].split(',')[0] ||
+            room.spectators[i].conn.remoteAddress.split(':')[3]) === ip
+        )
+          return false;
       }
       return true;
     }
@@ -83,7 +104,10 @@ function manageConnection(io, namespace, roomDB) {
         socket.emit('duplicate-client');
         setTimeout(socket.disconnect, 1000);
         console.log(
-          `Socket ${socket.id} joined with duplicate IP ${socket.request.connection.remoteAddress}. Terminating connection`
+          `Socket ${socket.id} joined with duplicate IP ${
+            socket.handshake.headers['x-forwarded-for'].split(',')[0] ||
+            socket.conn.remoteAddress.split(':')[3]
+          }. Terminating connection`
         );
         return;
       }
