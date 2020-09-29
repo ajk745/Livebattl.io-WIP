@@ -3,6 +3,7 @@ var playerTag1, playerTag2;
 var title, description;
 var timer1, timer2;
 var video1, video2;
+var streak1, streak2;
 var playerNotif;
 var overlayText;
 var rules;
@@ -20,6 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
   playerStats = document.getElementById('player-stats');
   playerTag1 = document.getElementById('playername1');
   playerTag2 = document.getElementById('playername2');
+  streak1 = document.getElementById('winstreak1');
+  streak2 = document.getElementById('winstreak2');
   timer1 = document.getElementById('timer1');
   timer2 = document.getElementById('timer2');
   video1 = document.getElementById('cam-1-embed');

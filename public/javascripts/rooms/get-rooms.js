@@ -20,6 +20,7 @@ function getRooms(query) {
 }
 
 function addRoom(room) {
+  console.log(room);
   var rows = roomList.getElementsByClassName('row');
   var lastRow = rows[rows.length - 1];
   if (!lastRow || (lastRow && lastRow.getElementsByClassName('column').length >= 4)) {

@@ -99,8 +99,16 @@ socket.on('player-data', (data) => {
   playerCount = data.playerCount;
 
   playerStats.innerHTML = `${data.playerCount} Current Viewers </br> ${data.queue.length} in Queue`;
-  playerTag1.innerHTML = data.cam1 === null ? '' : data.cam1;
-  playerTag2.innerHTML = data.cam2 === null ? '' : data.cam2;
+  playerTag1.innerHTML = !data.cam1 || data.cam1.name === null ? '' : data.cam1.name;
+  playerTag2.innerHTML = !data.cam2 || data.cam2.name === null ? '' : data.cam2.name;
+  if (data.cam1 && data.cam1.streak > 0) {
+    streak1.innerHTML = 'Streak: ' + data.cam1.streak;
+    streak1.style.visibility = 'visible';
+  } else streak1.style.visibility = 'hidden';
+  if (data.cam2 && data.cam2.streak > 0) {
+    streak2.innerHTML = 'Streak: ' + data.cam1.streak;
+    streak2.style.visibility = 'visible';
+  } else streak2.style.visibility = 'hidden';
 
   updateGameData(data.game || { player: null });
 

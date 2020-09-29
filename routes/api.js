@@ -187,7 +187,7 @@ router.post('/new-room', (req, res, next) => {
             namespace: formBody.namespace,
             description: formBody.description,
             rules: {
-              turnMode: formBody.turnMode,
+              turnMode: Boolean.valueOf(formBody.turnMode),
               timeLimit: formBody.timeLimit,
             },
             style: {

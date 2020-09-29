@@ -198,7 +198,6 @@ function setMSE() {
     sourceBuffer1.addEventListener('update', function () {
       if (chunks1.length !== 0) {
         sourceBuffer1.appendBuffer(chunks1.shift());
-        console.log('test1');
       }
     });
   });

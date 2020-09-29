@@ -52,6 +52,12 @@
   width: 100%;
 }
 
+.winstreak {
+  margin: 0;
+  visibility: hidden;
+  color: gold;
+}
+
 body {
   transition: all 0.3s ease-in;
 }
