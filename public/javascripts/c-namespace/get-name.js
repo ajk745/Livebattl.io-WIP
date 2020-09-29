@@ -1,4 +1,5 @@
 function getName() {
+  if (!connectionAllowed) return;
   var name =
     prompt('Enter a nickname to use in this room.', localStorage.getItem('previousName', '')) ||
     'Player' + guidGenerator();

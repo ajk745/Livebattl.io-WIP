@@ -27,6 +27,7 @@ var rooms = {};
 function manageConnection(io, namespace, roomDB) {
   io.on('connection', (socket) => {
     console.log(`User connected: ${socket.id} on namespace ${namespace}`);
+
     if (!rooms[namespace]) {
       rooms[namespace] = {
         namespace: namespace,
@@ -63,7 +64,29 @@ function manageConnection(io, namespace, roomDB) {
       });
     } else manageSocket(rooms[namespace]);
 
+    //TESTING; hope this isn't too expensive
+    function checkDuplicateIP(socket, room) {
+      var ip = socket.request.connection.remoteAddress;
+      if (room.cam1 && room.cam1.request.connection.remoteAddress === ip) return false;
+      if (room.cam2 && room.cam2.request.connection.remoteAddress === ip) return false;
+      for (let i = 0; i < room.queue.length; i++) {
+        if (room.queue[i].request.connection.remoteAddress === ip) return false;
+      }
+      for (let i = 0; i < room.spectators.length; i++) {
+        if (room.spectators[i].request.connection.remoteAddress === ip) return false;
+      }
+      return true;
+    }
+
     function manageSocket(room) {
+      if (!checkDuplicateIP(socket, room)) {
+        socket.emit('duplicate-ip');
+        setTimeout(socket.disconnect, 1000);
+        console.log(
+          `Socket ${socket.id} joined with duplicate IP ${socket.request.connection.remoteAddress}. Terminating connection`
+        );
+        return;
+      }
       room.userCount++;
       socket.emit('page-style', room.style, room.description);
       socket.emit('game-rules', room.rules);
@@ -134,8 +157,8 @@ function sendPlayerData(io, room) {
       return socket.name;
     }),
     game: room.currentGame ? room.currentGame.getData() : null,
-    cam1: room.cam1 ? room.cam1.name : null,
-    cam2: room.cam2 ? room.cam2.name : null,
+    cam1: room.cam1 ? { name: room.cam1.name, streak: room.cam1.streak || 0 } : null,
+    cam2: room.cam2 ? { name: room.cam2.name, streak: room.cam2.streak || 0 } : null,
   };
   io.emit('player-data', data);
 }
@@ -211,9 +234,11 @@ function startNewGame(io, room, roomDB) {
       if (room.cam2) {
         room.spectators.push(room.cam2);
         room.cam2.emit('end-stream');
+        if (room.cam2) room.cam2.streak = 0;
       }
       if (room.cam1) {
         room.cam1.emit('end-stream');
+        room.cam1.streak = room.cam1 && room.cam1.streak ? room.cam1.streak++ : 1;
       }
       room.cam2 = room.queue.shift();
       if (room.cam1 === null) room.cam1 = room.queue.shift();
@@ -221,9 +246,11 @@ function startNewGame(io, room, roomDB) {
       if (room.cam1) {
         room.spectators.push(room.cam1);
         room.cam1.emit('end-stream');
+        if (room.cam1) room.cam1.streak = 0;
       }
       if (room.cam2) {
         room.cam2.emit('end-stream');
+        room.cam2.streak = room.cam2 && room.cam2.streak ? room.cam2.streak++ : 1;
       }
       room.cam1 = room.queue.shift();
       if (room.cam2 === null) room.cam2 = room.queue.shift();
@@ -258,6 +285,15 @@ function startNewGame(io, room, roomDB) {
         room.spectators.push(room.cam2);
         room.cam2.emit('end-stream');
       }
+
+      if (room.currentGame.winner === 1) {
+        room.cam1.streak = room.cam1 && room.cam1.streak ? room.cam1.streak++ : 1;
+        if (room.cam2) room.cam2.streak = 0;
+      } else if (room.currentGame.winner === 2) {
+        room.cam2.streak = room.cam2 && room.cam2.streak ? room.cam2.streak++ : 1;
+        if (room.cam1) room.cam1.streak = 0;
+      }
+
       room.cam1 = null;
       room.cam2 = null;
 
