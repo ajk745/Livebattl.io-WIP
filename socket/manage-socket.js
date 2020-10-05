@@ -66,10 +66,10 @@ function manageConnection(io, namespace, roomDB) {
 
     //TESTING; hope this isn't too expensive
     function checkDuplicateIP(socket, room) {
+      if (!socket.handshake.headers['x-forwarded-for']) return false;
       var ip =
         socket.handshake.headers['x-forwarded-for'].split(',')[0] ||
         socket.conn.remoteAddress.split(':')[3];
-      if (!ip) return false;
       if (
         room.cam1 &&
         (room.cam1.handshake.headers['x-forwarded-for'].split(',')[0] ||
