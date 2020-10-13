@@ -13,7 +13,7 @@ app.use('/', indexRouter);
 app.use('/api', apiRouter);
 app.use(express.static(path.join(__dirname, 'public')));
 
-// catch 404 and forward to error handler
+// catch 404
 app.use(function (req, res, next) {
   res.sendFile(path.join(__dirname, 'public', 'not-found.html'));
 });
@@ -23,7 +23,7 @@ app.use(function (err, req, res, next) {
   res
     .status(500)
     .send(
-      'Seems like there was an internal error on the server. Please go back... <br><br><br> battl.live'
+      '500: Seems like there was an internal error on the server. Please go back... <br><br><br> battl.live'
     );
 });
 
