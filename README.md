@@ -1,3 +1,5 @@
+# www.battl.live
+
 ## battl.live-alpha
 This is a small web-game I made during quarantine in my spare time from classes. 
 
