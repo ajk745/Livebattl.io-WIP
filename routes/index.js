@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var fs = require('fs');
-const { exception } = require('console');
 
 var namespaces = fs
   .readFileSync(path.join(__dirname, '..', 'namespaces.txt'))
