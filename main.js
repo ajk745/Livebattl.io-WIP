@@ -18,13 +18,4 @@ app.use(function (req, res, next) {
   res.sendFile(path.join(__dirname, 'public', 'not-found.html'));
 });
 
-app.use(function (err, req, res, next) {
-  console.error(err.stack);
-  res
-    .status(500)
-    .send(
-      '500: Seems like there was an internal error on the server. Please go back... <br><br><br> battl.live'
-    );
-});
-
 module.exports = app;
