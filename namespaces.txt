@@ -7,3 +7,5 @@
 /PoliticalDebate
 /random
 /test
+/PoliticalDebate
+/PoliticalDebate
