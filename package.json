@@ -25,7 +25,7 @@
     "querystring": "^0.2.0",
     "request": "^2.88.2",
     "simple-peer": "^9.7.2",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "socket.io-stream": "^0.9.1",
     "uuid": "^8.3.0",
     "webm-cluster-stream": "^1.0.0"
