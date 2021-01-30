@@ -218,6 +218,22 @@ header {
   background-color: var(--main-color, #333);
 }
 
+@media screen and (max-width: 600px) {
+  #headerwrap #tab-container {
+    width: 100%;
+    margin-top: 1em;
+  }
+
+  #headerwrap #tab {
+    width: 100%;
+    margin: 0;
+  }
+
+  #headerwrap .tablink {
+    width: calc(100% / 3);
+  }
+}
+
 #f {
   background: #1a1a1a;
   padding-top: 70px;

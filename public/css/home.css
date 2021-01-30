@@ -1,3 +1,8 @@
+html {
+  background: var(--banner-background, url(../images/header-bg.jpg)) fixed center;
+  background-size: cover;
+}
+
 body {
   background: var(--banner-background, url(../images/header-bg.jpg)) no-repeat center;
   color: white;
@@ -55,6 +60,7 @@ body {
   list-style-type: none;
   padding: 0;
   margin: 0;
+  height: auto;
 }
 
 #featured-room-list li {
@@ -114,6 +120,12 @@ ul,
 li,
 img {
   margin-left: 2rem;
+}
+
+@media screen and (max-width: 1200px) {
+  #container {
+    display: none;
+  }
 }
 
 p {

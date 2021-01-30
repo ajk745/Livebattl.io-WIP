@@ -12,3 +12,17 @@
 a {
   color: #555;
 }
+
+@media screen and (max-width: 1200px) {
+  img {
+    display: none;
+  }
+
+  p {
+    width: calc(100% - 2em) !important;
+  }
+
+  .img-container {
+    display: none;
+  }
+}
