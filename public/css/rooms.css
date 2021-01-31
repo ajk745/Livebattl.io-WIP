@@ -68,4 +68,11 @@
     display: block;
     margin-bottom: 20px;
   }
+
+  #new-room-button,
+  #room-search {
+    width: calc(100% - 4em);
+    margin-left: 2em;
+    margin-top: 1em;
+  }
 }
